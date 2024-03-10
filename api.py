@@ -41,3 +41,6 @@ class API:
     @staticmethod
     def get_area(area_id) -> TreeNode:
         return TreeNode(**get(f"{API.BASE_URL}/areas/{area_id}").json())
+
+
+print(API.get_area(88))

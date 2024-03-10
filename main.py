@@ -20,6 +20,12 @@ def format_time(start_ns: int, end_ns: int) -> str:
 
 
 def main():
+
+    a = MemorizedTreeGeocoder()
+    print(a._apply_geocoding("88"))
+
+    return
+
     areas_data = API.get_areas()
 
     geocoder_list: list[Geocoder] = [
