@@ -10,16 +10,18 @@ class MemorizedTreeGeocoder(Geocoder):
             self.__data = API.get_areas()
         else:
             self.__data = data
+        self.__dict_data = {}
+        self._extend_dict(self.__data)
 
-    """
-        TODO:
-        Сделать функцию перебора дерева:
-        - Для каждого узла сохранять в словарь адресов
-    """
+    def _extend_dict(self, tree_areas: list[TreeNode], parent_str: str = ''):
+        for node in tree_areas:
+            address = f'{parent_str}, {node.name}' if parent_str else node.name
+            self.__dict_data[node.id] = address
+            self._extend_dict(node.areas, address)
 
-    def _apply_geocoding(self, area_id: str) -> str:
+    def _apply_geocoding(self, area_id: int) -> str:
         """
             TODO:
             - Возвращать данные из словаря с адресами
         """
-        raise NotImplementedError()
+        return self.__dict_data.get(str(area_id))

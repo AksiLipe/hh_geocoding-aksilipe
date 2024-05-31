@@ -18,4 +18,15 @@ class SimpleTreeGeocoder(Geocoder):
             - В ходе перебора возвращать массив элементов, состоящих из TreeNode необходимой ветки
             - Из массива TreeNode составить полный адрес
         """
-        raise NotImplementedError()
+        for tree in self.__data:
+            res = self._find_area(tree, area_id)
+            if res:
+                return ', '.join([i.name for i in res])
+
+    def _find_area(self, tree: TreeNode, area_id: str):
+        if tree.id == area_id:
+            return [tree]
+        for node in tree.areas:
+            res = self._find_area(node, area_id)
+            if res:
+                return [tree, *res]
